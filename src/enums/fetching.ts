@@ -1,0 +1,7 @@
+
+export enum eFetchingState {
+    UNINITIALIZED = "UNINITIALIZED",
+    FETCHING = "FETCHING",
+    ERROR = "ERROR",
+    SUCCESSFUL = "SUCCESSFUL"
+}
