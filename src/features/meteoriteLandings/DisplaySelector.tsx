@@ -12,9 +12,8 @@ const ToggleDisplayButton = styled.button`
     border: 1px solid purple;
     background-color: mediumpurple;
     color: black;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 50px;
 `;
 
 const DisplaySelector: React.FC<iDisplaySelectorProps> = ({displayState, onDisplayChange, className=''}) => {

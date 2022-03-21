@@ -9,6 +9,7 @@ const MeteoriteLandingsTableContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  height: 100%;
 
   .ReactVirtualized__Table {
     background-color: #303339;
@@ -34,7 +35,7 @@ const MeteoriteLandingsTableContainer = styled.div`
   }
 `
 
-const MeteoriteLandingsTable: React.FC<iMeteoriteLandingsDisplayProps> = ({ meteoriteLandings, loadMeteoriteLandings, hasMore,loadingMeteoriteLandingsStatus }) => {
+const MeteoriteLandingsTable: React.FC<iMeteoriteLandingsDisplayProps> = ({ meteoriteLandings, loadMeteoriteLandings, hasMore }) => {
 
     const TABLE_HEIGHT= 800
     const ROW_HEIGHT = 40

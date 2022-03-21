@@ -20,19 +20,14 @@ export interface iMeteoriteLandingsDisplayProps {
 
 
 const MeteoriteLandingsDisplayContainer = styled.div`
-  position: relative;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   flex: 1;
   align-items: center;
-  justify-content: space-around;
 `;
 
-const StyledDisplaySelector = styled(DisplaySelector)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 20px;
-`;
+
 
 
 const MeteoriteLandingsDisplay: React.FC<iMeteoriteLandingsDisplayProps> = (props) => {
@@ -41,17 +36,17 @@ const MeteoriteLandingsDisplay: React.FC<iMeteoriteLandingsDisplayProps> = (prop
 
 
     return (
-        <MeteoriteLandingsDisplayContainer>
-            <ErrorBoundary>
-                <StyledDisplaySelector displayState={displayState} onDisplayChange={setDisplayState}/>
-                { displayState === eDisplayState.TABLE &&
-                    <MeteoriteLandingsTable {...props} />
-                }
-                { displayState === eDisplayState.ANIMATION &&
-                    <MeteoriteLandingsAnimation {...props} />
-                }
-            </ErrorBoundary>
-        </MeteoriteLandingsDisplayContainer>
+        <ErrorBoundary>
+            <MeteoriteLandingsDisplayContainer>
+                    <DisplaySelector displayState={displayState} onDisplayChange={setDisplayState}/>
+                    { displayState === eDisplayState.TABLE &&
+                        <MeteoriteLandingsTable {...props} />
+                    }
+                    { displayState === eDisplayState.ANIMATION &&
+                        <MeteoriteLandingsAnimation {...props} />
+                    }
+            </MeteoriteLandingsDisplayContainer>
+        </ErrorBoundary>
     );
 }
 
