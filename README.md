@@ -1,4 +1,7 @@
 # Meteorite Landing React App
+
+you can see app on: https://master.d10t5bb5dpgk2k.amplifyapp.com/
+
 ## Available Scripts
 In the project directory, you can run:
 ### `npm start`
