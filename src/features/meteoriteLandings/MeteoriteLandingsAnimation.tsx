@@ -5,25 +5,29 @@ import { useEffect, useRef} from "react";
 import { random } from "../../util/MathUtils.js";
 
 class Meteorite {
-    private color: any;
-    x: any;
-    y: any;
-    private velX: any;
-    private velY: any;
-    size: any;
-    private canvas: any;
-    private ctx: any;
+    private color: string;
+    x: number;
+    y: number;
+    private velX: number;
+    private velY: number;
+    size: number;
+    private canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D;
 
 
-    constructor(x: any, y: any, velX: any, velY: any, color: string, size: any, canvas: any) {
+    constructor(x: number, y: number, velX: number, velY: number, color: string, size: number, canvas: HTMLCanvasElement) {
+        this.canvas = canvas;
+        const context = canvas.getContext('2d');
+        if(!context){
+            throw new Error();
+        }
+        this.ctx = context;
         this.x = x;
         this.y = y;
         this.velX = velX;
         this.velY = velY;
         this.color = color;
         this.size = size;
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
     }
 
     draw() {
@@ -62,6 +66,7 @@ const MeteoriteLandingsCanvas = styled.canvas`
   height: 100%;
 `
 
+// im not so good with animations, but im starting to play with canvas now, and there was a tutorial with a similar animation and it was so cool I add to here.
 const MeteoriteLandingsAnimation: React.FC<iMeteoriteLandingsDisplayProps> = ({meteoriteLandings, hasMore, loadMeteoriteLandings}) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -78,9 +83,7 @@ const MeteoriteLandingsAnimation: React.FC<iMeteoriteLandingsDisplayProps> = ({m
             return;
         }
         const ctx = canvasRef.current.getContext('2d');
-        // @ts-ignore
         const width = canvasRef.current.width;
-        // @ts-ignore
         const height = canvasRef.current.height;
 
         function loop() {
@@ -102,19 +105,15 @@ const MeteoriteLandingsAnimation: React.FC<iMeteoriteLandingsDisplayProps> = ({m
     }, [])
 
     useEffect(() => {
-        if (!canvasRef.current) {
+        const canvasElement = canvasRef.current;
+        const context2D = canvasElement?.getContext('2d');
+        if (!canvasElement || !context2D) {
             return;
         }
+        context2D.fillStyle = 'rgba(0, 0, 0, 1)';
 
-        const ctx = canvasRef.current.getContext('2d');
-        if (ctx) {
-            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-        }
-
-        // @ts-ignore
-        const width = canvasRef.current.width;
-        // @ts-ignore
-        const height = canvasRef.current.height;
+        const width = canvasElement.width;
+        const height = canvasElement.height;
         function randomRGB() {
             return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
         }
@@ -122,13 +121,13 @@ const MeteoriteLandingsAnimation: React.FC<iMeteoriteLandingsDisplayProps> = ({m
         meteoritesRefContainer.current = meteoriteLandings.map((meteoriteLanding) => {
             const size = parseInt(meteoriteLanding.mass) * 0.00001;
             return new Meteorite(
-                random(0 + size,width - size),
-                random(0 + size,height - size),
+                random(size,width - size),
+                random(size,height - size),
                 random(-7,7),
                 random(-7,7),
                 randomRGB(),
                 size,
-                canvasRef.current
+                canvasElement
             );
         });
     }, [meteoriteLandings])
